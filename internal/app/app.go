@@ -46,18 +46,18 @@ func (a *App) Run() error {
 	log.Infof("DB initialized successfully ")
 
 	if err != nil {
-		logger.Fatal("can`t close stan")
+		log.Fatal("can`t close stan")
 	}
 	repository := repo.NewConnect(db)
 	sc, err := stan.Connect(a.cfg.NatsServer.ClusterId, a.cfg.NatsServer.ClientId, stan.NatsURL(a.cfg.NatsServer.NatsUrl), stan.MaxPubAcksInflight(1000))
 	if err != nil {
-		logger.Fatal("cat't connect to stan", zap.Error(err))
+		log.Fatal("cat't connect to stan", zap.Error(err))
 	}
 	msgValidator := validator.New()
 	newConsumer := consumer.NewConsumer(sc, &repository, logger, msgValidator)
 	err = newConsumer.ListeningMessages()
 	if err != nil {
-		return err
+		log.Fatal("error in listening messages for consumer")
 	}
 	newCache := cache.NewCache(a.cfg.HTTPServer.CacheSize, &repository, logger)
 	_ = newCache.Recover(a.cfg.HTTPServer.CacheFillTimeout)
