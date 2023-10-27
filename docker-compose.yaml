@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:14.3-alpine
+    environment:
+      POSTGRES_DB: "wb"
+      POSTGRES_USER: "intern"
+      POSTGRES_PASSWORD: "123"
+    ports:
+      - "5432:5432"
+
+  migration:
+    depends_on:
+      - postgres
+    build: ./migrations
+    container_name: migrations
+    restart: on-failure
+
+  server:
+    depends_on:
+      - postgres
+      - nats-streaming
+    restart: on-failure
+    build: .
+    container_name: wb
+
+    ports:
+      - "8080:8080"
+
+  nats-streaming:
+    image: nats-streaming:0.24.6
+    container_name: nats_streaming
+    ports:
+      - "11111:11111"
+      - "22222:22222"
