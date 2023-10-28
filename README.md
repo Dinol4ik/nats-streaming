@@ -13,7 +13,7 @@
             dbname: 'wb'
             password: '123'
         natsServer:
-            ClusterId: "test-cluster" - с
+            ClusterId: "test-cluster" 
             ClientId: "client-12"
             url: "Название контейнера/адрес хоста (для этого проекта - nats-streaming)"
 
