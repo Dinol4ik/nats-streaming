@@ -3,11 +3,11 @@
 #### !!! Для запуска проекта в корневой папке должен лежать файл config.yaml с такими полями!!!
 
     Пример:
-     httpServer:
+	httpServer:
             Address: '0.0.0.0:8080'
             CacheSize: '128'
             fillTimeout: '4'
-        postgres:
+	postgres:
             host: 'название контейнера/aдресс хоста (для этого проекта postgres)'
             user: 'intern'
             dbname: 'wb'
